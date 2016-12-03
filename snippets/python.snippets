@@ -253,6 +253,7 @@ snippet akw
 # KM3Pipe
 snippet kp
 	import km3pipe as kp
+	${0}
 snippet mod
 	class ${1:Name}(${2:kp.Module}):
 	    def process(self, blob):
@@ -261,5 +262,8 @@ snippet mod
 
 snippet pipe
 	pipe = kp.Pipeline()
-	pipe.attach(${1:Module})
-	pipe.drain()
+	pipe.attach(kp.io.${1:Pump}, filename="${2}")
+	pipe.attach(${3:Module})
+	pipe.drain(${0})
+snippet db
+	db = kp.db.DBManager()
