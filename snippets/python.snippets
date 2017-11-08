@@ -254,19 +254,63 @@ snippet akw
 snippet kp
 	import km3pipe as kp
 	${0}
-snippet mod
+
+snippet kpmod
 	class ${1:Name}(${2:kp.Module}):
 	    def process(self, blob):
 	        ${0}
 	        return blob
 
+snippet kpmodf
+	class ${1:Name}(${2:kp.Module}):
+	    def configure(self):
+	        pass
+
+	    def process(self, blob):
+	        ${0}
+	        return blob
+
+	    def finish(self):
+	        pass
+
 snippet pipe
 	pipe = kp.Pipeline()
-	pipe.attach(kp.io.${1:Pump}, filename="${2}")
+	pipe.attach(kp.io.${1:Pump}, filename=${2})
 	pipe.attach(${3:Module})
 	pipe.drain(${0})
+
 snippet db
 	db = kp.db.DBManager()
+
+snippet docopt
+	#!/usr/bin/env python
+	# coding=utf-8
+	# Filename: `vim_snippets#Filename('$1.py', 'foo.py')`
+	# Author: `g:snips_author` <`g:snips_email_km3net`>
+	"""
+	Convert ROOT and EVT files to HDF5.
+
+	Usage:
+	    `vim_snippets#Filename('$1.py', 'foo.py')` ${1:FILENAME}
+	    `vim_snippets#Filename('$1.py', 'foo.py')` (-h | --help)
+
+	Options:
+	    -h --help   Show this screen.
+
+	"""
+
+
+	def main():
+	    from docopt import docopt
+	    args = docopt(__doc__, version=version)
+
+	    ${0}
+	
+
+	if __name__ == '__main__':
+	    main()
+	
+    	
 
 # Sphinx Gallery
 snippet gal
