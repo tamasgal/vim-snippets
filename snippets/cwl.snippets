@@ -1,6 +1,16 @@
 snippet #!
 	#!/usr/bin/env cwl-runner
 
-	cwlVersion: v1.0
-	class: ${0:CommandLineTool}
-	baseCommand: ${1:command}
+	cwlVersion: ${1:v1.0}
+	class: ${2:CommandLineTool}
+	baseCommand: ${3:command}
+
+	${0}
+
+snippet input
+	  ${1:name}:
+	    type: ${2}
+	    inputBinding:
+	      position: ${0}
+
+	
