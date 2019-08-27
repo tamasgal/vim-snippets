@@ -100,3 +100,31 @@ snippet wa
 snippet err
 	error("${1}")
 	${0}
+
+
+# Custom
+snippet plt plot script for makefiles
+	#!/usr/bin/env julia
+	const plot_filename = "$1.tikz"
+
+	if length(ARGS) < 1
+	    println(plot_filename)
+	    exit(1)
+	end
+
+	using Pkg; Pkg.activate("."); Pkg.instantiate()
+
+	const PLOTS_PATH = ARGS[1]
+
+	using CSV
+	using DrWatson
+	using PGFPlotsX
+
+	ENV["PGFPLOTSX_PREAMBLE_PATH"] = projectdir("pgfplots_preamble.tex")
+
+
+	fig = @pgf Axis($0)
+
+
+	pgfsave(joinpath(PLOTS_PATH, plot_filename), fig, include_preamble=false)
+	pgfsave(joinpath(PLOTS_PATH, plot_filename*".png"), fig)
