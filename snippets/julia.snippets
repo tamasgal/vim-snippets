@@ -105,26 +105,33 @@ snippet err
 # Custom
 snippet plt plot script for makefiles
 	#!/usr/bin/env julia
-	const plot_filename = "$1.tikz"
+	doc = """${1:Description}
 
-	if length(ARGS) < 1
-	    println(plot_filename)
-	    exit(1)
-	end
+	Usage:
+	  `vim_snippets#Filename('$1.jl', 'foo.jl')` [options]
+	  `vim_snippets#Filename('$1.jl', 'foo.jl')` -h | --help
 
+	Options:
+	  -o PATH      Output path [default: .].
+	  -h --help    Show this screen.
+
+	"""
 	using Pkg; Pkg.activate("."); Pkg.instantiate()
 
-	const PLOTS_PATH = ARGS[1]
+	using DocOpt
+	args = docopt(doc)
 
-	using CSV
 	using DrWatson
 	using PGFPlotsX
 
 	ENV["PGFPLOTSX_PREAMBLE_PATH"] = projectdir("pgfplots_preamble.tex")
 
+	PLOT_NAME = splitext(basename(PROGRAM_FILE))[1]
+	PLOT_PATH = args["-o"]
 
-	fig = @pgf Axis($0)
+
+	fig = @pgf $0
 
 
-	pgfsave(joinpath(PLOTS_PATH, plot_filename), fig, include_preamble=false)
-	pgfsave(joinpath(PLOTS_PATH, plot_filename*".png"), fig)
+	pgfsave(joinpath(PLOT_PATH, PLOT_NAME*".tikz"), fig, include_preamble=false)
+	pgfsave(joinpath(PLOT_PATH, PLOT_NAME*".png"), fig)
