@@ -122,7 +122,7 @@ snippet plt plot script for makefiles
 	using DrWatson
 	using PGFPlotsX
 
-	ENV["PGFPLOTSX_PREAMBLE_PATH"] = projectdir("pgfplots_preamble.tex")
+	ENV["PGFPLOTSX_PREAMBLE_PATH"] = projectdir("tex", "pgfplots_preamble.tex")
 
 	PLOT_NAME = splitext(basename(PROGRAM_FILE))[1]
 	PLOT_PATH = args["-o"]
